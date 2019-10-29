@@ -145,6 +145,10 @@ function keyPressed() {
     console.log("KeyPressed");
     reset();
 }
+function mouseClicked() {
+    console.log("MouseClicked");
+    reset();
+}
 function reset(){
     background(0);
     matrix = [];

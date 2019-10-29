@@ -9,7 +9,7 @@ These are the rules:
 4.  Any dead cell with exactly three live neighbours becomes a live cell,as if by reproduction.
 
 
-Any key pressed event Reset the CA (Celular Automata).
+Any key pressed or click event Reset the CA (Celular Automata).
 
 [DEMO HERE](https://trafalmejo.github.io/game-of-life/)
 
