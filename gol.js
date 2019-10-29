@@ -10,6 +10,7 @@ var matrixXsize = 0;
 var matrixYsize = 0;
 var sizeCell = 0;
 var matrix = [];
+var matrixLast = [];
 let cell; // Declare object
 
 function setup() {
@@ -34,6 +35,7 @@ for (let index = 0; index < 200; index++) {
     
     matrix[int(random(1*(matrixXsize/5),4*(matrixXsize/5)))][int(random(1*(matrixYsize/5),4*(matrixYsize/5)))] = 1;
 }
+matrixLast = matrix;
 }
 
 function draw() {
@@ -42,23 +44,23 @@ function draw() {
             var neigh = countLiveNeightbors(i,j);
             var sum = sumNeigh(neigh);
             // Any live cell with fewer than two live neighbours dies, as if by underpopulation.
-            if(matrix[i][j] == 1 && sum< 2){
+            if(matrixLast[i][j] == 1 && sum< 2){
                 matrix[i][j] = 0;
             }
             // Any live cell with two or three live neighbours lives on to the next generation.
-            if(matrix[i][j] == 1 && sum == 2 || sum == 3){
+            if(matrixLast[i][j] == 1 && sum == 2 || sum == 3){
                 matrix[i][j] = 1;
             }
             // Any live cell with more than three live neighbours dies, as if by overpopulation.
-            if(matrix[i][j] == 1 && sum > 3){
+            if(matrixLast[i][j] == 1 && sum > 3){
                 matrix[i][j] = 0;
             }
             // Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
-            if(matrix[i][j] == 0 && sum == 3){
+            if(matrixLast[i][j] == 0 && sum == 3){
                 matrix[i][j] = 1;
             }
 
-            if(matrix[i][j] == 0){
+            if(matrixLast[i][j] == 0){
                fill(255,255,0);
             }
             else{
@@ -67,6 +69,7 @@ function draw() {
            ellipse(i*sizeCell, j*sizeCell, sum*3);  
         }
     }
+    matrixLast = matrix;
 }
 function sumNeigh(array){
     var sum = 0;
@@ -78,66 +81,66 @@ function sumNeigh(array){
 function countLiveNeightbors(i, j){
     var neightbors = [];
     if(i==matrixXsize-1 && j==matrixYsize-1){
-        neightbors.push(matrix[i-1][j-1]);
-        neightbors.push(matrix[i-1][j]);
-        neightbors.push(matrix[i][j-1]);
+        neightbors.push(matrixLast[i-1][j-1]);
+        neightbors.push(matrixLast[i-1][j]);
+        neightbors.push(matrixLast[i][j-1]);
     }
     if(i==0 && j==0){
-        neightbors.push(matrix[i+1][j+1]);
-        neightbors.push(matrix[i][j+1]);
-        neightbors.push(matrix[i+1][j]);
+        neightbors.push(matrixLast[i+1][j+1]);
+        neightbors.push(matrixLast[i][j+1]);
+        neightbors.push(matrixLast[i+1][j]);
     }
     if(i==0 && j==matrixYsize-1){
-        neightbors.push(matrix[i+1][j-1]);
-        neightbors.push(matrix[i][j-1]);
-        neightbors.push(matrix[i+1][j]);
+        neightbors.push(matrixLast[i+1][j-1]);
+        neightbors.push(matrixLast[i][j-1]);
+        neightbors.push(matrixLast[i+1][j]);
     }
     if(i==matrixXsize-1 && j==0){
-        neightbors.push(matrix[i-1][j+1]);
-        neightbors.push(matrix[i][j+1]);
-        neightbors.push(matrix[i-1][j]);
+        neightbors.push(matrixLast[i-1][j+1]);
+        neightbors.push(matrixLast[i][j+1]);
+        neightbors.push(matrixLast[i-1][j]);
     }
     //Wall _!
     if(i==matrixXsize-1 && j>0 && j<matrixYsize-1){
-        neightbors.push(matrix[i][j-1]);
-        neightbors.push(matrix[i-1][j-1]);
-        neightbors.push(matrix[i-1][j]);
-        neightbors.push(matrix[i-1][j+1]);
-        neightbors.push(matrix[i][j+1]);
+        neightbors.push(matrixLast[i][j-1]);
+        neightbors.push(matrixLast[i-1][j-1]);
+        neightbors.push(matrixLast[i-1][j]);
+        neightbors.push(matrixLast[i-1][j+1]);
+        neightbors.push(matrixLast[i][j+1]);
     }
     //Wall _
     if(j==matrixXsize-1 && i>0 && i<matrixXsize-1){
-        neightbors.push(matrix[i-1][j]);
-        neightbors.push(matrix[i-1][j-1]);
-        neightbors.push(matrix[i][j-1]);
-        neightbors.push(matrix[i+1][j-1]);
-        neightbors.push(matrix[i+1][j]);
+        neightbors.push(matrixLast[i-1][j]);
+        neightbors.push(matrixLast[i-1][j-1]);
+        neightbors.push(matrixLast[i][j-1]);
+        neightbors.push(matrixLast[i+1][j-1]);
+        neightbors.push(matrixLast[i+1][j]);
     }
     //Wall |_
     if(i==0 && j>0 && j<matrixYsize-1){
-        neightbors.push(matrix[i][j-1]);
-        neightbors.push(matrix[i+1][j-1]);
-        neightbors.push(matrix[i+1][j]);
-        neightbors.push(matrix[i+1][j+1]);
-        neightbors.push(matrix[i][j+1]);
+        neightbors.push(matrixLast[i][j-1]);
+        neightbors.push(matrixLast[i+1][j-1]);
+        neightbors.push(matrixLast[i+1][j]);
+        neightbors.push(matrixLast[i+1][j+1]);
+        neightbors.push(matrixLast[i][j+1]);
     }          
     //Wall -
     if(j==0 && i>0 && i<matrixXsize-1){
-        neightbors.push(matrix[i-1][j]);
-        neightbors.push(matrix[i-1][j+1]);
-        neightbors.push(matrix[i][j+1]);
-        neightbors.push(matrix[i+1][j+1]);
-        neightbors.push(matrix[i+1][j]);
+        neightbors.push(matrixLast[i-1][j]);
+        neightbors.push(matrixLast[i-1][j+1]);
+        neightbors.push(matrixLast[i][j+1]);
+        neightbors.push(matrixLast[i+1][j+1]);
+        neightbors.push(matrixLast[i+1][j]);
     }
     if(i>0 && i<matrixXsize-1 && j>0 && j<matrixYsize-1 ){
-        neightbors.push(matrix[i+1][j+1]);
-        neightbors.push(matrix[i][j+1]);
-        neightbors.push(matrix[i+1][j]);
-        neightbors.push(matrix[i-1][j-1]);
-        neightbors.push(matrix[i][j-1]);
-        neightbors.push(matrix[i-1][j]);
-        neightbors.push(matrix[i+1][j-1]);
-        neightbors.push(matrix[i-1][j+1]);
+        neightbors.push(matrixLast[i+1][j+1]);
+        neightbors.push(matrixLast[i][j+1]);
+        neightbors.push(matrixLast[i+1][j]);
+        neightbors.push(matrixLast[i-1][j-1]);
+        neightbors.push(matrixLast[i][j-1]);
+        neightbors.push(matrixLast[i-1][j]);
+        neightbors.push(matrixLast[i+1][j-1]);
+        neightbors.push(matrixLast[i-1][j+1]);
     }
     return neightbors;
 }
@@ -164,4 +167,5 @@ for (let index = 0; index < 200; index++) {
     
     matrix[int(random(1*(matrixXsize/5),4*(matrixXsize/5)))][int(random(1*(matrixYsize/5),4*(matrixYsize/5)))] = 1;
 }
+matrixLast = matrix;
 }
