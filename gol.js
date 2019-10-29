@@ -20,10 +20,8 @@ background(0);
 noStroke();
 ellipseMode(CENTER); // Set ellipseMode is CORNER
 sizeCell = 15;
-console.log(sizeCell);
 matrixXsize= (window.innerWidth+sizeCell)/sizeCell;
 matrixYsize= (window.innerHeight+sizeCell)/sizeCell;
-console.log(matrixXsize, matrixYsize)
 for (let i = 0; i < matrixXsize; i++) {
     let matrixY = [];
     for (let j = 0; j < matrixYsize; j++) {
@@ -142,4 +140,24 @@ function countLiveNeightbors(i, j){
         neightbors.push(matrix[i-1][j+1]);
     }
     return neightbors;
+}
+function keyPressed() {
+    console.log("KeyPressed");
+    reset();
+}
+function reset(){
+    background(0);
+    matrix = [];
+    for (let i = 0; i < matrixXsize; i++) {
+        let matrixY = [];
+        for (let j = 0; j < matrixYsize; j++) {
+            matrixY.push(0);
+        }
+        matrix.push(matrixY)
+    }
+//Initials seeds
+for (let index = 0; index < 200; index++) {
+    
+    matrix[int(random(1*(matrixXsize/5),4*(matrixXsize/5)))][int(random(1*(matrixYsize/5),4*(matrixYsize/5)))] = 1;
+}
 }

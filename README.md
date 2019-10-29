@@ -8,5 +8,8 @@ These are the rules:
 3.  Any live cell with more than three live neighbours dies, as if by overpopulation.
 4.  Any dead cell with exactly three live neighbours becomes a live cell,as if by reproduction.
 
+
+Any key pressed event Reset the CA (Celular Automata).
+
 [DEMO HERE](https://trafalmejo.github.io/game-of-life/)
 
